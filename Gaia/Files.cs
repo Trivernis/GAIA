@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace GAIA
 {
-    public class Files
+    namespace Files
     {
         //A File to save dictionaries
         public class DictionaryFile
@@ -424,6 +424,40 @@ namespace GAIA
                     keyElement.SetAttribute(attribute.Key,attribute.Value);
                 }
                 save();
+            }
+        }
+
+        public class IOAdditions
+        {
+            public IOAdditions()
+            {
+
+            }
+
+            public bool copyDirectory(string sourcepath, string targetpath)
+            {
+                return copy(new DirectoryInfo(sourcepath), targetpath);
+            }
+
+            private bool copy(DirectoryInfo di, string target)
+            {
+
+                try
+                {
+                    target += "/"+di.Name;
+
+                    foreach(var file in di.GetFiles())
+                    {
+                        file.CopyTo(target + "/" + file.Name);
+                    }
+
+                    foreach(var dir in di.GetDirectories())
+                    {
+                        copy(dir, target);
+                    }
+                    return true;
+                }
+                catch { return false; }
             }
         }
     }
