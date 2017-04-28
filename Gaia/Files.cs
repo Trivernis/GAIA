@@ -291,7 +291,7 @@ namespace GAIA
                 //creating or overwriting the logfile and writing the head
                 using (StreamWriter sw = logfile.CreateText())
                 {
-                    sw.WriteLine("Started logging at " + DateTime.Now.ToString(@"YYYY/MM/DD_HH:mm:ss") + " with executable " + executable);
+                    sw.WriteLine("Started logging at " + DateTime.Now.ToString(@"yyyy/MM/dd_HH:mm:ss") + " with executable " + executable);
                 }
             }
 
@@ -429,9 +429,16 @@ namespace GAIA
 
         public class IOAdditions
         {
+            public LogFile logfile;
+
             public IOAdditions()
             {
+                logfile = new LogFile();
+            }
 
+            public IOAdditions(LogFile lf)
+            {
+                logfile = lf;
             }
 
             public bool copyDirectory(string sourcepath, string targetpath)
@@ -457,7 +464,7 @@ namespace GAIA
                     }
                     return true;
                 }
-                catch (Exception ex) { return false; }
+                catch (Exception ex) { logfile.log(ex.ToString()); return false; }
             }
         }
     }
