@@ -457,7 +457,7 @@ namespace GAIA
                     }
                     return true;
                 }
-                catch { return false; }
+                catch (Exception ex) { return false; }
             }
         }
     }
